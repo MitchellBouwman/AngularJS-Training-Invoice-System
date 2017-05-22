@@ -1,0 +1,17 @@
+[
+  {
+	"invoiceId": 1,
+    "name": "AbbVie France",
+    "invoiceDate": "1288323623006"
+  },
+  {
+	"invoiceId": 2,
+    "name": "Ablynx NV",
+	"invoiceDate": "1288323623006"
+  },
+  {
+	"invoiceId": 3,
+    "name": "Astellas Pharma Europe BV",
+	"invoiceDate": "1288323623006"
+  }
+]
