@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="static/css/invoices.css" />
     <script type="text/javascript" src="angular.min.js"></script>
-    <script type="text/javascript" src="invoices.js"></script>
+    <script type="text/javascript" src="invoice.js"></script>
     <script type="text/javascript" src="app.js"></script>
   </head>
 
@@ -17,11 +17,10 @@
 		</header>
 		<hr>
     </div>
-	
-   
+
     <!-- Table -->
     <div class="container">
-		<table class="table table-striped invoices" ng-init="openDetails = false">
+		<table class="table table-striped invoices">
 			<thead>
 				<tr>
 					<th>Invoice number</th>
@@ -32,71 +31,14 @@
 			</thead>
 			<tbody>
 				<!-- Table TR -->
-				<tr ng-repeat="data in invoice.data" class="invoice{{ data.invoiceId }}">
+				<tr ng-repeat="data in invoice.data">
 					<td>#{{ data.invoiceId }}</td>
 					<td>{{ data.name }}</td>
 					<td>{{ data.invoiceDate | date : 'dd-MM-yyyy' }}</td>
-					<td class="text-right"><a href="#" class="btn btn-success btn-sm" ng-click="openDetails = !openDetails">Add transaction</a></td>
-				
-					<td ng-class="{ active:openDetails }" class="invoiceDetails">
-						<div class="row">
-							<div class="col-md-8">
-								<h1>Invoice: {{ data.invoiceId }}</h1>
-							</div>
-							<div class="col-md-4 text-right">
-								<a href="#" class="btn btn-danger btn-sm closeDetails" ng-click="openDetails = !openDetails">Close transaction</a>
-							</div>
-							
-							<div class="col-md-12">
-								<hr>
-							</div>
-						</div><!-- // row -->
-
-					
-						<div class="row">
-							<!-- Form -->
-							<form>
-								<div class="form-group">
-									<label for="description" class="col-sm-12 control-label text-left">Description:</label>
-									<div class="col-sm-12">
-										<input type="text" class="form-control" id="description">
-									</div>
-								</div>
-
-								<br class="clearfix" clear="all" />
-								<br class="clearfix" clear="all" />
-
-								<div class="form-group">
-									<label for="quantity" class="col-sm-12 control-label">Quantity</label>
-									<div class="col-sm-12">
-										<input class="form-control" id="quantity">
-									</div>
-								</div>
-
-								<br class="clearfix" clear="all" />
-								<br class="clearfix" clear="all" />
-
-								<div class="form-group">
-									<label for="amount" class="col-sm-12 control-label">Amount</label>
-									<div class="col-sm-12">
-										<input class="form-control" id="amount">
-									</div>
-								</div>
-
-								<br class="clearfix" clear="all" />
-								<br class="clearfix" clear="all" />
-
-								<div class="form-group">
-									<div class="col-sm-12 text-right">
-										<button type="submit" class="btn btn-success">Add transaction</button>
-									</div>
-								</div>
-							</form>
-							<!-- // Form -->
-						</div><!-- // row -->
-					</td>
-				</tr>
+					<td class="text-right"><a class="btn btn-success btn-sm" ng-click="test(data.invoiceId)">Add transaction</a></td>
+					<td ng-if="openDetails">HEUH DATAA</td>
 				<!-- // Table TR -->
+				</tr>
 			</tbody>
 		</table>
     </div>
@@ -105,31 +47,6 @@
     
     <script type="text/javascript" src="static/js/jQuery.min.js"></script>
     <script type="text/javascript" src="static/js/ui-bootstrap-tpls.js"></script>
-    
-    <script>
-		$(document).ready(function (){
-			var screenWidth = $(document).width();
-			var containerWidth = $(".container").innerWidth(); 
-			var animCalc = (screenWidth - containerWidth) / 2 - 650;
-			
-			
-			
-			$("a.btn").on("click", function (){
-				if( $("td.invoiceDetails").is(".active") ){
-					
-					$("table.invoices").css("left", animCalc+"px");
-					//$("table.invoices").addClass("active");
-				} else {
-					//$("table.invoices").removeClass("active");
-					$("table.invoices").css("left", 0+"px");
-				}
-			});
-			$("a.btn.closeDetails").on("click", function (){
-				$("td.invoiceDetails").removeClass("active");
-				$("table.invoices").css("left", 0+"px");
-			});
-		});
-	</script>
     
     
   </body>
