@@ -1,0 +1,21 @@
+{
+	"invoiceId": 2,
+	"name": "Ablynx NV",
+	"invoiceDate": "1288323623006",
+	"invoices": [
+		{
+			"product": "10 pack needles",
+			"price": "23.99"
+		},
+		{
+			"product": "2x 13mm fans",
+			"price": "26.98"
+		}
+	],
+	"modalData": {
+		"description": "Description for invoice ID 2",
+		"quantity": "Quantity for invoice ID 2",
+		"amount": "Amount for invoice ID 2"
+	}
+}
+

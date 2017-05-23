@@ -1,0 +1,10 @@
+{
+	"invoiceId": 3,
+	"name": "Astellas Pharma Europe BV",
+	"invoiceDate": "1288323623006",
+	"data": {
+		"description": "Description for invoice ID 3",
+		"quantity": "Quantity for invoice ID 3",
+		"amount": "Amount for invoice ID 3"
+	}
+}

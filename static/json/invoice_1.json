@@ -1,0 +1,21 @@
+{
+	"invoiceId": 1,
+	"name": "AbbVie France",
+	"invoiceDate": "1288323623006",
+	"invoices": [
+		{
+			"product": "Computer screen 27inch",
+			"price": "279.95"
+		},
+		{
+			"product": "Heart Sensor",
+			"price": "1199.95"
+		}
+	],
+	"modalData": {
+		"description": "Description for invoice ID 1",
+		"quantity": "Quantity for invoice ID 1",
+		"amount": "Amount for invoice ID 1"		
+	}
+}
+

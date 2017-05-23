@@ -3,7 +3,7 @@
   <head>
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="static/css/invoices.css" />
-    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="static/js/angular.min.js"></script>
     <script type="text/javascript" src="invoice.js"></script>
     <script type="text/javascript" src="app.js"></script>
   </head>
@@ -17,7 +17,7 @@
 		</header>
 		<hr>
     </div>
-
+   
     <!-- Table -->
     <div class="container">
 		<table class="table table-striped invoices">
@@ -31,21 +31,40 @@
 			</thead>
 			<tbody>
 				<!-- Table TR -->
-				<tr ng-repeat="data in invoice.data">
+				<tr ng-repeat="data in invoice.data" class="invoiceRow invoice{{ data.invoiceId }}">
 					<td>#{{ data.invoiceId }}</td>
 					<td>{{ data.name }}</td>
 					<td>{{ data.invoiceDate | date : 'dd-MM-yyyy' }}</td>
-					<td class="text-right"><a class="btn btn-success btn-sm" ng-click="test(data.invoiceId)">Add transaction</a></td>
-					<td ng-if="openDetails">HEUH DATAA</td>
+					<td class="text-right"><a class="btn btn-success btn-sm" ng-click="getData(data.invoiceId)">View invoices</a></td>
 				<!-- // Table TR -->
 				</tr>
 			</tbody>
 		</table>
     </div>
     <!-- Table -->
-  
     
+    <!-- Modal -->
+	<div class="modal fade" id="addInvoice" tabindex="-1" role="dialog" aria-labelledby="addInvoiceLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="addInvoiceLabel">New invoice</h4>
+				</div>
+				<div class="modal-body">
+					<div class="appendHere"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Add invoice &amp; close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+   
+    <!-- Bottom scripts -->
     <script type="text/javascript" src="static/js/jQuery.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="static/js/ui-bootstrap-tpls.js"></script>
     
     
