@@ -42,7 +42,6 @@
 							alert("No invoices found!")
 						}
 					} else {
-						//console.log("Already opened lets destroy it!");
 						$("table.invoices tr.inv"+data.invoiceId).remove();
 					}
 				} else {
