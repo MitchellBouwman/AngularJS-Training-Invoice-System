@@ -4,11 +4,15 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="static/css/invoices.css" />
     <script type="text/javascript" src="static/js/angular.min.js"></script>
-    <script type="text/javascript" src="invoice.js"></script>
+    
+	<!-- Controllers -->
     <script type="text/javascript" src="app.js"></script>
+    <!-- Directives -->
+    <script type="text/javascript" src="static/js/directives/invoiceData.js"></script>
+    
   </head>
 
-  <body ng-controller="invoicesController as invoice">
+  <body ng-controller="invoicesController as invoices">
     <!--  Header  -->
     <div class="container">
 		<header>
@@ -29,34 +33,40 @@
 					<th class="text-right">Actions</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="invoicesTbody">
 				<!-- Table TR -->
-				<tr ng-repeat="data in invoice.data" class="invoiceRow invoice{{ data.invoiceId }}">
-					<td>#{{ data.invoiceId }}</td>
-					<td>{{ data.name }}</td>
-					<td>{{ data.invoiceDate | date : 'dd-MM-yyyy' }}</td>
-					<td class="text-right"><a class="btn btn-success btn-sm" ng-click="getData(data.invoiceId)">View invoices</a></td>
-				<!-- // Table TR -->
+				<tr ng-repeat="details in invoices.details">
+					<td>#{{ details.invoiceId }}</td>
+					<td>{{ details.name }}</td>
+					<td>{{ details.invoiceDate | date : 'dd-MM-yyyy' }}</td>
+					<td class="text-right">
+						<a class="btn btn-primary btn-sm" ng-click="getData(details, $index)">View details</a>
+					</td>
 				</tr>
+				<!-- // Table TR -->
 			</tbody>
+			
+
 		</table>
     </div>
+    
+    
     <!-- Table -->
     
     <!-- Modal -->
-	<div class="modal fade" id="addInvoice" tabindex="-1" role="dialog" aria-labelledby="addInvoiceLabel">
+	<div class="modal fade" id="invoicemodal" tabindex="-1" role="dialog" aria-labelledby="invoicemodalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="addInvoiceLabel">New invoice</h4>
+					<h4 class="modal-title" id="invoicemodalLabel">Invoice</h4>
 				</div>
 				<div class="modal-body">
-					<div class="appendHere"></div>
+					<!-- Append here -->
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Add invoice &amp; close</button>
+					<button type="button" class="btn btn-primary">Save &amp; close</button>
 				</div>
 			</div>
 		</div>

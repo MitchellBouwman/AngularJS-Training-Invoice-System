@@ -3,52 +3,44 @@
 
 	app.controller('invoicesController', ['$http', '$scope', '$compile', function ($http, $scope, $compile) {
 		var invoices = this;
-		invoices.data = [];
+		invoices.details = [];
+		var invoicesData = null;
+		
 		$http.get('./static/json/invoices_dummy.json').success(function (data) {
-			invoices.data = data;
+			invoices.details = data;
 		});
 		
-		$scope.getData = function(orderId){
-			/* Fetch data from "API". */
-			$http.get('./static/json/invoice_'+orderId+'.json').success(function (data) {				
-				if(data){
-					// The template to show.
-					var template = "<tr class=\"extraInfo inv"+data.invoiceId+"\">																\
-										<td colspan=\"4\">																						\
-											<h3>Invoices for order number: "+data.invoiceId+"</h3>												\
-											<hr>																								\
-											<div class=\"orders\"></div>																		\
-											<hr>																								\
-											<div class=\"bottom-bar text-right\">																\
-												<a href=\"#\" class=\"btn btn-default btn-sm\">Cancel</a> 										\
-												<a href=\"#\" class=\"btn btn-success btn-sm\" ng-click=\"newInvoice("+data.invoiceId+")\">Add invoice</a> \
-											</div>																								\
-										</td>																									\
-									</tr>";
-					
-					// Compile the template to make the "newInvoice()" function working
-					template = $compile(template)($scope);
-					
-					// If not opened show else remove/close element.
-					if (!$("table.invoices tr.inv"+data.invoiceId).length){
-						$(template).insertAfter($("table.invoices tr.invoiceRow.invoice"+data.invoiceId));
-						
-						if(data.invoices){
-							$(data.invoices).each(function (){							
-								var elem = "<div class=\"alert alert-info\">&euro;"+this.price+" | "+this.product+"</div>";
-								$(elem).appendTo("table.invoices tr.inv"+data.invoiceId+" .orders");
-							});
-						} else {
-							alert("No invoices found!")
-						}
-					} else {
-						$("table.invoices tr.inv"+data.invoiceId).remove();
-					}
-				} else {
-					// Cant retreive data.. make an error.
-				}	
-			});
+		/* Click button "View invoices" */
+		$scope.getData = function(order, $index){			
+			/* If opened close first. */
+			var openedRow = $("table.invoices #invoicesTbody").find('#orderwrap').length;
+
+			if (openedRow > 0){	
+				$("table.invoices #invoicesTbody").find('#orderwrap').remove(); 
+			} else {
+				$http.get('./static/json/invoice_'+order.invoiceId+'.json').success(function (data) {
+					var tbody = document.getElementById('invoicesTbody');	// Get tbody.
+
+					/* Make new row */
+					var row = tbody.insertRow($index + 1);
+					row.setAttribute('id', 'orderwrap');
+					row.setAttribute('class', 'nohover');
+
+					/* Make new cell into the row */
+					var cell = row.insertCell(0);
+					cell.colSpan = "4";					// < variable would be nice.. for.. 4.
+
+					/* Parse the variable to the invoice-rows element */
+					$scope.invoiceDetails = data;
+
+					/* Append the directive into the cell and compile it */
+					$(cell).append($compile('<invoice-rows details="invoiceDetails"></invoice-rows>')($scope));
+				});
+		}
 		} /* // getData function */
+		
+		
+		/*
 		
 		$scope.newInvoice = function(orderId){		
 			// Make the form
@@ -62,11 +54,7 @@
 			// Last but not least, open the modal.
 			$("#addInvoice").modal();
 		} 
-		
-		
-		
-		
-		
+		*/
 		//#addInvoice .modal-body .appendHere
 		
 		

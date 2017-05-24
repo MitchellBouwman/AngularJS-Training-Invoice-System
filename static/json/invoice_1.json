@@ -5,17 +5,14 @@
 	"invoices": [
 		{
 			"product": "Computer screen 27inch",
-			"price": "279.95"
+			"price": "279.95",
+			"date": "1288323623006"
 		},
 		{
 			"product": "Heart Sensor",
-			"price": "1199.95"
+			"price": "1199.95",
+			"date": "1288323623003"
 		}
-	],
-	"modalData": {
-		"description": "Description for invoice ID 1",
-		"quantity": "Quantity for invoice ID 1",
-		"amount": "Amount for invoice ID 1"		
-	}
+	]
 }
 

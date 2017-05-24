@@ -5,17 +5,14 @@
 	"invoices": [
 		{
 			"product": "10 pack needles",
-			"price": "23.99"
+			"price": "23.99",
+			"date": "1288323623003"
 		},
 		{
 			"product": "2x 13mm fans",
-			"price": "26.98"
+			"price": "26.98",
+			"date": "1288323623003"
 		}
-	],
-	"modalData": {
-		"description": "Description for invoice ID 2",
-		"quantity": "Quantity for invoice ID 2",
-		"amount": "Amount for invoice ID 2"
-	}
+	]
 }
 

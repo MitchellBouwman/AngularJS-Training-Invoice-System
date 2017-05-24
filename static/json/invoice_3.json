@@ -2,9 +2,26 @@
 	"invoiceId": 3,
 	"name": "Astellas Pharma Europe BV",
 	"invoiceDate": "1288323623006",
-	"data": {
-		"description": "Description for invoice ID 3",
-		"quantity": "Quantity for invoice ID 3",
-		"amount": "Amount for invoice ID 3"
-	}
+	"invoices": [
+		{
+			"product": "10 pack needles",
+			"price": "23.99",
+			"date": "1288323623003"
+		},
+		{
+			"product": "10 pack needles",
+			"price": "23.99",
+			"date": "1288323623003"
+		},
+		{
+			"product": "10 pack needles",
+			"price": "23.99",
+			"date": "1288323623003"
+		},
+		{
+			"product": "2x 13mm fans",
+			"price": "26.98",
+			"date": "1288323623003"
+		}
+	]
 }
