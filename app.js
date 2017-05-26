@@ -11,32 +11,42 @@
 		});
 		
 		/* Click button "View invoices" */
-		$scope.getData = function(order, $index){			
+		$scope.getData = function(order, $index){		
+			//console.log($index);
 			/* If opened close first. */
-			var openedRow = $("table.invoices #invoicesTbody").find('#orderwrap').length;
-
-			if (openedRow > 0){	
-				$("table.invoices #invoicesTbody").find('#orderwrap').remove(); 
+			
+			var openedRow = $("table.invoices #invoicesTbody").find('#orderwrap[data-id='+$index+']').length;
+						
+			if(openedRow == 1){
+				console.log("Nu zou die weg moeten gaan..");
+				$("table.invoices #invoicesTbody").find('#orderwrap[data-id='+$index+']').remove();
+				return;
 			} else {
-				$http.get('./static/json/invoice_'+order.invoiceId+'.json').success(function (data) {
-					var tbody = document.getElementById('invoicesTbody');	// Get tbody.
+				$("table.invoices #invoicesTbody").find('#orderwrap').remove();
+			}
+			
+			$http.get('./static/json/invoice_'+order.invoiceId+'.json').success(function (data) {
+				var tbody = document.getElementById('invoicesTbody');	// Get tbody.
 
-					/* Make new row */
-					var row = tbody.insertRow($index + 1);
-					row.setAttribute('id', 'orderwrap');
-					row.setAttribute('class', 'nohover');
+				
+				
+				
+				/* Make new row */
+				var row = tbody.insertRow($index + 1);
+				row.setAttribute('id', 'orderwrap');
+				row.setAttribute('data-id', $index);
 
-					/* Make new cell into the row */
-					var cell = row.insertCell(0);
-					cell.colSpan = "4";					// < variable would be nice.. for.. 4.
+				/* Make new cell into the row */
+				var cell = row.insertCell(0);
+				cell.colSpan = "4";					// < variable would be nice.. for.. 4.
 
-					/* Parse the variable to the invoice-rows element */
-					$scope.invoiceDetails = data;
+				/* Parse the variable to the invoice-rows element */
+				$scope.invoiceDetails = data;
 
-					/* Append the directive into the cell and compile it */
-					$(cell).append($compile('<invoice-rows details="invoiceDetails"></invoice-rows>')($scope));
-				});
-		}
+				/* Append the directive into the cell and compile it */
+				$(cell).append($compile('<invoice-rows details="invoiceDetails"></invoice-rows>')($scope));
+			});
+			
 		} /* // getData function */
 		
 		

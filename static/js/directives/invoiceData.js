@@ -7,12 +7,12 @@
 			
 			/* Edit product button */
 			$scope.editProduct = function($index){
-				
+
+
 				/* Create new one */
-				if(!$index){
+				if(!$index && $index != 0){
 					$("#invoicemodal .modal-body").empty();
 					
-									
 					// Append compiled data to InvoiceModal.
 					$("#invoicemodal .modal-body").append($compile('<edit-product data="productDetails"></edit-product>')($scope));
 					
@@ -25,6 +25,7 @@
 
 					// Set information.
 					$scope.productDetails = $scope.details.invoices[$index];
+					
 
 					// Append compiled data to InvoiceModal.
 					$("#invoicemodal .modal-body").append($compile('<edit-product data="productDetails"></edit-product>')($scope));
