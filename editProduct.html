@@ -1,9 +1,12 @@
 <h4 class="margintop0"><strong>Edit product:</strong> <span ng-modal="productName">{{ data.product }}</span></h4>
 <hr>
 <form name="productForm" ng-submit="saveInvoice(data.product.$index)">
+	<input name="productId" ng-model="data.productId" class="form-control hidden" required>
+	<input name="invoiceId" ng-model="data.invoiceId" class="form-control hidden" required>
+	
 	<div class="form-group">
 		<label for="date" >Date:</label>
-		<input  name="date" ng-model="data.date" placeholder="dd-mm-yyyy" class="form-control" required>
+		<input name="date" ng-model="data.date" placeholder="dd-mm-yyyy" class="form-control" required>
 	</div>
 	
 	<div class="form-group">
@@ -21,3 +24,8 @@
 	
 	
 </form>
+
+<div class="text-right">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	<button type="button" class="btn btn-primary" ng-click="submitProductForm($index)">Save &amp; close</button>
+</div>

@@ -4,32 +4,35 @@
 	app.controller('invoicesController', ['$http', '$scope', '$compile', function ($http, $scope, $compile) {
 		var invoices = this;
 		invoices.details = [];
+		var invoice = [];
 		var invoicesData = null;
 		
-		$http.get('./static/json/invoices_dummy.json').success(function (data) {
-			invoices.details = data;
-		});
+		
+		invoices.details = [{"invoiceId": 1,"name": "AbbVie France","invoiceDate": "1288323623006"},
+							{"invoiceId": 2,"name": "Ablynx NV","invoiceDate": "1288323623006"},
+							{"invoiceId": 3,"name": "Astellas Pharma Europe BV","invoiceDate": "1288323623006"}
+						   ];	
+		invoice		 	 = [{"invoiceId": 1,"name": "AbbVie France","invoiceDate": "1288323623006","invoices": [{"product": "Computer screen 27inch","price": "279.95","date": "1288323623006"},{"product": "Heart Sensor","price": "1199.95","date": "1288323623003"}]},{"invoiceId": 2,"name": "Ablynx NV","invoiceDate": "1288323623006","invoices": [{"product": "10 pack needles","price": "23.99","date": "1288323623003"},{"product": "2x 13mm fans","price": "26.98","date": "1288323623003"}]},{"invoiceId": 3,"name": "Astellas Pharma Europe BV","invoiceDate": "1288323623006","invoices": [{"product": "10 pack needles","price": "23.99","date": "1288323623003"},{"product": "10 pack needles","price": "23.99","date": "1288323623003"},{"product": "10 pack needles","price": "23.99","date": "1288323623003"},{"product": "2x 13mm fans","price": "26.98","date": "1288323623003"}]}]
+		
+		console.log(invoice);
+		
 		
 		/* Click button "View invoices" */
-		$scope.getData = function(order, $index){		
-			//console.log($index);
-			/* If opened close first. */
+		$scope.getData = function(order, $index){	
+			var colSpan = $('table.invoices > thead > tr > th').length;
 			
+			/* Nice toggling between customers invoices */
 			var openedRow = $("table.invoices #invoicesTbody").find('#orderwrap[data-id='+$index+']').length;
-						
 			if(openedRow == 1){
-				console.log("Nu zou die weg moeten gaan..");
 				$("table.invoices #invoicesTbody").find('#orderwrap[data-id='+$index+']').remove();
 				return;
 			} else {
 				$("table.invoices #invoicesTbody").find('#orderwrap').remove();
 			}
+			/* // Nice toggling between customers invoices */
 			
-			$http.get('./static/json/invoice_'+order.invoiceId+'.json').success(function (data) {
+			
 				var tbody = document.getElementById('invoicesTbody');	// Get tbody.
-
-				
-				
 				
 				/* Make new row */
 				var row = tbody.insertRow($index + 1);
@@ -38,14 +41,14 @@
 
 				/* Make new cell into the row */
 				var cell = row.insertCell(0);
-				cell.colSpan = "4";					// < variable would be nice.. for.. 4.
+				cell.colSpan = colSpan;
 
 				/* Parse the variable to the invoice-rows element */
-				$scope.invoiceDetails = data;
+				$scope.invoiceDetails = invoice[$index];
 
 				/* Append the directive into the cell and compile it */
 				$(cell).append($compile('<invoice-rows details="invoiceDetails"></invoice-rows>')($scope));
-			});
+			
 			
 		} /* // getData function */
 		

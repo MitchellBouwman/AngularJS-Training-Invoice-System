@@ -7,7 +7,8 @@
 			
 			/* Edit product button */
 			$scope.editProduct = function($index){
-
+				$scope.productDetails = {};
+				
 
 				/* Create new one */
 				if(!$index && $index != 0){
@@ -22,25 +23,21 @@
 				/* Edit excisting one */
 					// Empty modal body first.
 					$("#invoicemodal .modal-body").empty();
-
-					// Set information.
-					$scope.productDetails = $scope.details.invoices[$index];
 					
-
+					// Make product object.
+					$scope.productDetails = $scope.details.invoices[$index];
+					// Add productId & invoiceId so it knows where to save.
+					$scope.productDetails['productId'] = $index;
+					$scope.productDetails['invoiceId'] = $scope.details['invoiceId'];
+					
 					// Append compiled data to InvoiceModal.
 					$("#invoicemodal .modal-body").append($compile('<edit-product data="productDetails"></edit-product>')($scope));
 
 					// Show modal.
 					$("#invoicemodal").modal();
 				}
-				
-				
-			}/* // editProduct */
 			
-			/* Close invoices table tab */
-			$scope.closeInvoices = function(){
-				$("table.invoices tr#orderwrap").remove();
-			} /* // close invoices tab */
+			}/* // editProduct */
 			
 		}
 		return {
@@ -55,8 +52,20 @@
 	
 	
 	app.directive('editProduct', function (){
-		function controller($scope){
-			//console.log($scope.data);	
+		function controller($scope, $compile){
+			
+			$scope.submitProductForm = function($index){
+				var productForm = $("#invoicemodal .modal-body form");
+				
+				productForm.submit(function(e){
+					e.preventDefault();
+					
+					var formdata = productForm.serialize();
+					console.log(formdata);
+					
+				});
+				$(productForm).submit();				
+			}			
 		}
 		
 		return {
