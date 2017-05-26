@@ -71,6 +71,7 @@
 					e.preventDefault();
 					var formdata =  $.deparam(productForm.serialize());
 					console.log(formdata);
+
 					
 					
 					if(formdata.productId == "new"){
