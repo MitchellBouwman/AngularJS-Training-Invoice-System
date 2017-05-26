@@ -21,7 +21,7 @@
 					<td>{{ invoices.price | currency : "€" : 2 }}</td>
 					<td class="text-right">
 						<a href="#" class="btn btn-sm btn-primary" ng-click="editProduct($index)">Edit product</a>
-						<a href="#" class="btn btn-sm btn-danger disabled">Delete</a>
+						<a href="#" class="btn btn-sm btn-danger" ng-click="deleteProduct($index)">Delete</a>
 					</td>
 				</tr>
 			</tbody>
@@ -30,7 +30,7 @@
 		<hr>
 		
 		<div class="bottom-bar text-right">
-			<a href="#" class="btn btn-default btn-sm" ng-click="closeInvoices()">Close</a>
+			<a href="#" class="btn btn-default btn-sm disabled">Close</a>
 			<a href="#" class="btn btn-success btn-sm" ng-click="editProduct(new)">Add invoice/product</a>
 		</div>
 	</td>	
