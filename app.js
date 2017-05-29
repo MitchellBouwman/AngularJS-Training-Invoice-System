@@ -1,5 +1,5 @@
 (function() {
-  var app = angular.module('invoicesSystem', ['720kb.datepicker', 'ng-currency']);
+  var app = angular.module('invoicesSystem', ['720kb.datepicker', 'ng-currency', 'ui.bootstrap']);
 	
 	app.controller('invoicesController', ['$http', '$scope', '$rootScope', '$compile', function ($http, $scope, $rootScope, $compile) {
 		var invoices = this;		
