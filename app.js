@@ -47,27 +47,26 @@
 		} /* // getData function */		 
 	}]); // invoicesController	
 	
-	
-	
+		
 	app.directive('invoiceRows', function (){
 		function controller($scope, $compile){
 			$scope.dateBirth = new Date();			
-			
+
 			/* Edit product button */
 			$scope.editProduct = function($index){
 				$scope.productDetails = {};
-				
+
 				/* Create new one */
 				if(!$index && $index != 0){
 					$("#invoicemodal .modal-body").empty();
-					
+
 					// ProductID to "new" so a "save" is a new entry.
 					$scope.productDetails['productId'] = 'new';
 					$scope.productDetails['invoiceId'] = $scope.details['invoiceId'];
-					
+
 					// Append compiled data to InvoiceModal.
 					$("#invoicemodal .modal-body").append($compile('<edit-product data="productDetails"></edit-product>')($scope));
-					
+
 					// Show modal.
 					$("#invoicemodal").modal();
 				} else {
@@ -87,7 +86,6 @@
 					// Show modal.
 					$("#invoicemodal").modal();
 				}
-			
 			}/* // editProduct */
 			
 			// Delete row/product from invoice.
@@ -125,21 +123,18 @@
 							"product": formdata.product,
 							"price": formdata.price
 						});
-						
+
 						$("#invoicemodal").modal('hide');
-						
 					} else {						
 						console.log("Saving existing product");
 						$("#invoicemodal").modal('hide');
 					}
-					
 				});
-				
+
 				$rootScope.invoices = invoicesJSON; // Update the invoices rootscope.
 				$(productForm).submit();	 		// Submit the form.. run above function - "productForm.submit".	
-			}					
+			}			
 		}
-		
 		return {
 			restrict: 'E',
 			scope: {
