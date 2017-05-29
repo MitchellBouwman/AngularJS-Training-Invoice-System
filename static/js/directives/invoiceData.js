@@ -28,7 +28,7 @@
 					$("#invoicemodal .modal-body").empty();
 					
 					// Make product object.
-					$scope.productDetails = $scope.details.invoices[$index];
+					$scope.productDetails = $scope.details.products[$index];
 					// Add productId & invoiceId so it knows where to save.
 					$scope.productDetails['productId'] = $index;
 					$scope.productDetails['invoiceId'] = $scope.details['invoiceId'];
@@ -41,10 +41,11 @@
 				}
 			
 			}/* // editProduct */
+			
+			// Delete row/product from invoice.
 			$scope.deleteProduct = function($index){
-				
 				// Delete from JSON array.
-				$scope.details.invoices.splice($index, 1);
+				$scope.details.products.splice($index, 1);
 			}
 		}
 		return {
@@ -61,27 +62,40 @@
 	app.directive('editProduct', function (){
 		function controller($scope, $compile){
 			
-			console.log($scope);	
+			//console.log($scope);	
 			
-			
-			$scope.submitProductForm = function($scope, invoices){
-				var productForm = $("#invoicemodal .modal-body form");
-				
-				productForm.submit(function(e, $scope){
-					e.preventDefault();
-					var formdata =  $.deparam(productForm.serialize());
-					console.log(formdata);
+			$scope.submitProductForm = function($scope){
+				var productForm = $("#invoicemodal .modal-body form");								// Get the form
+				var invoicesJSON = $("#invoicemodal .modal-content pre.invoicesJSON").html();		// Get the product JSON
+				invoicesJSON = $.parseJSON(invoicesJSON);
 
-					
+
+				productForm.submit(function(e, $scope){
+					e.preventDefault();											// Prevent what you normally do with a form (post & refresh page).
+					var formdata =  $.deparam(productForm.serialize());			// Get all data from the submitted form.
+					var invoiceNo = formdata.invoiceId - 1;
+					var productId = formdata.productId;
+					//console.log(invoicesJSON.invoice[invoiceNo].products[productId]);
 					
 					if(formdata.productId == "new"){
-						//alert("Save new product");
+						console.log("Creating a new product");
+						
+						invoicesJSON.invoice[invoiceNo].products.push({
+							"date": formdata.date, 
+							"product": formdata.product,
+							"price": formdata.price
+						});
+						
+						// Set the new json in the .pre element in the modal.
+						$("#invoicemodal .modal-content pre.invoicesJSON").html(JSON.stringify(invoicesJSON));
+						$("#invoicemodal").modal('hide');
+						
 					} else {						
-						//alert("Save existing product");
+						console.log("Saving existing product");
+						$("#invoicemodal").modal('hide');
 					}
 					
 				});
-				
 				
 				$(productForm).submit();				
 			}			
@@ -96,6 +110,7 @@
 			controller: controller
 		}
 	});
+	
 	
 	
 	
