@@ -1,8 +1,5 @@
 (function() {
-  var app = angular.module('invoicesSystem', []);
-
-	
-
+  var app = angular.module('invoicesSystem', ['720kb.datepicker']);
 	
 	app.controller('invoicesController', ['$http', '$scope', '$rootScope', '$compile', function ($http, $scope, $rootScope, $compile) {
 		var invoices = this;		
@@ -10,7 +7,7 @@
 							{"invoiceId": 2,"name": "Ablynx NV","invoiceDate": "1288323623006"},
 							{"invoiceId": 3,"name": "Astellas Pharma Europe BV","invoiceDate": "1288323623006"}
 						   ];	
-		invoices.invoice = [{"invoiceId": 1,"name": "AbbVie France","invoiceDate": "1288323623006","products": [{"product": "Computer screen 27inch","price": "279.95","date": "1288323623006"},{"product": "Heart Sensor","price": "1199.95","date": "1288323623003"}]},{"invoiceId": 2,"name": "Ablynx NV","invoiceDate": "1288323623006","products": [{"product": "10 pack needles","price": "23.99","date": "1288323623003"},{"product": "2x 13mm fans","price": "26.98","date": "1288323623003"}]},{"invoiceId": 3,"name": "Astellas Pharma Europe BV","invoiceDate": "1288323623006","products": [{"product": "10 pack needles","price": "23.99","date": "1288323623003"},{"product": "10 pack needles","price": "23.99","date": "1288323623003"},{"product": "10 pack needles","price": "23.99","date": "1288323623003"},{"product": "2x 13mm fans","price": "26.98","date": "1288323623003"}]}];
+		invoices.invoice = [{"invoiceId": 1,"name": "AbbVie France","invoiceDate": "1288323623006","products": [{"product": "Computer screen 27inch","price": "279.95","date": "11/05/2017"}, {"product": "Heart Sensor","price": "1199.95","date": "10/05/2017"}]}, {"invoiceId": 2,"name": "Ablynx NV","invoiceDate": "1288323623006","products": [{"product": "10 pack needles","price": "23.99","date": "12/05/2017"}, {"product": "2x 13mm fans","price": "26.98","date": "14/05/2017"}]}, {"invoiceId": 3,"name": "Astellas Pharma Europe BV","invoiceDate": "1288323623006","products": [{"product": "10 pack needles","price": "23.99","date": "15/05/2017"}, {"product": "10 pack needles","price": "23.99","date": "15/05/2017"}, {"product": "10 pack needles","price": "23.99","date": "15/05/2017"}, {"product": "2x 13mm fans","price": "26.98","date": "16/05/2017"}]}];
 		$rootScope.invoices = invoices.invoice;
 	
 		
@@ -47,9 +44,8 @@
 				$(cell).append($compile('<invoice-rows details="invoiceDetails"></invoice-rows>')($scope));
 			
 			
-		} /* // getData function */
+		} /* // getData function */		 
 	}]); // invoicesController	
-	
 	
 	
 	
@@ -141,7 +137,7 @@
 				
 				$rootScope.invoices = invoicesJSON; // Update the invoices rootscope.
 				$(productForm).submit();	 		// Submit the form.. run above function - "productForm.submit".	
-			}			
+			}					
 		}
 		
 		return {

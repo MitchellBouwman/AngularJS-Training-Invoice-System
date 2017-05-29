@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="static/css/invoices.css" />
     <script type="text/javascript" src="static/js/angular.min.js"></script>
-    <script type="text/javascript" src="https://rawgit.com/betsol/angular-input-date/master/src/angular-input-date.js"></script>
+    <script type="text/javascript" src="node_modules/angularjs-datepicker/src/js/angular-datepicker.js"></script>
     
 	<!-- Controllers -->
     <script type="text/javascript" src="app.js"></script>
@@ -39,7 +39,7 @@
 				<tr ng-repeat="details in invoices.details">
 					<td>#{{ details.invoiceId }}</td>
 					<td>{{ details.name }}</td>
-					<td>{{ details.invoiceDate | date : 'dd-MM-yyyy' }}</td>
+					<td>{{ details.invoiceDate | date : 'dd/MM/yyyy' }}</td>
 					<td class="text-right">
 						<a class="btn btn-primary btn-sm" ng-click="getData(details, $index)">Toggle details</a>
 					</td>
