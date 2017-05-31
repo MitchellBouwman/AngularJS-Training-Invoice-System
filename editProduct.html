@@ -1,6 +1,3 @@
-<h4 class="margintop0"><strong>Edit product:</strong> <span ng-modal="productName">{{ data.product }}</span></h4>
-<hr>
-
 <div class="alert alert-danger" ng-show="productForm.product.$touched && productForm.product.$invalid">A product name is required.</div>
 <div class="alert alert-danger" ng-show="productForm.price.$touched && productForm.price.$invalid">A product price is required.</div>
 
@@ -29,14 +26,5 @@
 			<input ng-currency type="text" name="price" ng-model="data.price" class="form-control" ng-required="true" currency-symbol="">
 		</div>
 	</div>
-	
-	
 </form>
 
-<div class="text-right">
-	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	
-	<button type="button" ng-disabled="productForm.product.$invalid || productForm.price.$invalid" class="btn btn-primary" ng-click="submitProductForm($index)">
-		Save &amp; close
-	</button>
-</div>

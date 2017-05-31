@@ -51,41 +51,9 @@
 	app.directive('invoiceRows', function (){
 		function controller($scope, $compile){
 			$scope.dateBirth = new Date();			
-
+			
 			/* Edit product button */
 			$scope.editProduct = function($index){
-				$scope.productDetails = {};
-
-				/* Create new one */
-				if(!$index && $index != 0){
-					$("#invoicemodal .modal-body").empty();
-
-					// ProductID to "new" so a "save" is a new entry.
-					$scope.productDetails['productId'] = 'new';
-					$scope.productDetails['invoiceId'] = $scope.details['invoiceId'];
-
-					// Append compiled data to InvoiceModal.
-					$("#invoicemodal .modal-body").append($compile('<edit-product data="productDetails"></edit-product>')($scope));
-
-					// Show modal.
-					$("#invoicemodal").modal();
-				} else {
-				/* Edit excisting one */
-					// Empty modal body first.
-					$("#invoicemodal .modal-body").empty();
-					
-					// Make product object.
-					$scope.productDetails = $scope.details.products[$index];
-					// Add productId & invoiceId so it knows where to save.
-					$scope.productDetails['productId'] = $index;
-					$scope.productDetails['invoiceId'] = $scope.details['invoiceId'];
-					
-					// Append compiled data to InvoiceModal.
-					$("#invoicemodal .modal-body").append($compile('<edit-product data="productDetails"></edit-product>')($scope));
-
-					// Show modal.
-					$("#invoicemodal").modal();
-				}
 			}/* // editProduct */
 			
 			// Delete row/product from invoice.
@@ -104,11 +72,108 @@
 		}
 	});
 	
+	
+	/***** MODAL *****/
+	app.controller('modalController', function ($uibModal, $log, $document, $scope, $compile) {
+		var $modal = this;
+		$modal.open = function (size, parentSelector, index) {
+
+			var parentElem = parentSelector ? angular.element($document[0].querySelector('.invoicemodal ' + parentSelector)) : undefined;
+			var modalInstance = $uibModal.open({
+					windowTopClass: 'invoicemodal',
+					animation: true,
+					ariaLabelledBy: 'modal-title',
+					ariaDescribedBy: 'modal-body',
+					templateUrl: 'myModalContent.html',
+					controller: 'ModalInstanceCtrl',
+					controllerAs: ' ',
+					size: size,
+					appendTo: parentElem
+			});
+
+			/** OLD FUNCTION  **/
+			$scope.productDetails = {};
+				// Empty first
+				$(".invoicemodal .modal-body").empty();
+
+				/* Create new one */
+				if(!index && index != 0){
+					// ProductID to "new" so a "save" is a new entry.
+					$scope.productDetails['productId'] = 'new';
+					$scope.productDetails['invoiceId'] = $scope.details['invoiceId'];
+
+					// Append compiled data to InvoiceModal.
+					$(".invoicemodal .modal-body").append($compile('<edit-product data="productDetails"></edit-product>')($scope));
+				} else {
+				/* Edit excisting one */
+					// Make product object.
+					$scope.productDetails = $scope.details.products[index];
+					// Add productId & invoiceId so it knows where to save.
+					$scope.productDetails['productId'] = index;
+					$scope.productDetails['invoiceId'] = $scope.details['invoiceId'];
+					
+					// Append compiled data to InvoiceModal.
+					$(".invoicemodal .modal-body").append($compile('<edit-product data="productDetails"></edit-product>')($scope));
+				}
+			/**  // OLD FUNCTION  **/
+			
+			console.log($scope.productDetails);
+			
+
+			modalInstance.result.then(function (selectedItem) {
+				$modal.selected = selectedItem;
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
+	});
+	app.controller('ModalInstanceCtrl', function ($uibModalInstance, $rootScope) {
+		var $modal = this;
+
+		$modal.ok = function ($scope) {
+			var productForm  = $(".invoicemodal .modal-body form");			// Get the form
+			var invoicesJSON = $rootScope.invoices;							// Get the product JSON
+
+			productForm.submit(function(e, $scope){
+				e.preventDefault();											// Prevent what you normally do with a form (post & refresh page).
+				var formdata =  $.deparam(productForm.serialize());			// Get all data from the submitted form.
+				var invoiceNo = formdata.invoiceId - 1;
+				var productId = formdata.productId;
+
+				console.log(formdata.productId);
+				
+				if(formdata.productId == "new"){					
+					invoicesJSON[invoiceNo].products.push({
+						"date": formdata.date, 
+						"product": formdata.product,
+						"price": formdata.price
+					});
+
+					$(".invoicemodal").modal('hide');
+				} else {						
+					console.log("Saving existing product");
+					$(".invoicemodal").modal('hide');
+				}
+			});
+
+			console.log($rootScope.invoices);
+			
+			$rootScope.invoices = invoicesJSON; // Update the invoices rootscope.
+			$(productForm).submit();	 		// Submit the form.. run above function - "productForm.submit".	
+		};
+
+		$modal.cancel = function () {
+			$uibModalInstance.dismiss('cancel');
+		};
+	});
+	/***** // MODAL *****/
+	
+	
 	app.directive('editProduct', ['$http', '$rootScope', '$compile', function ($http, $rootScope, $compile) {
 		function controller($scope, $compile){
 			
 			$scope.submitProductForm = function($scope){
-				var productForm = $("#invoicemodal .modal-body form");			// Get the form
+				var productForm = $(".invoicemodal .modal-body form");			// Get the form
 				var invoicesJSON = $rootScope.invoices;			// Get the product JSON
 
 				productForm.submit(function(e, $scope){
@@ -124,10 +189,10 @@
 							"price": formdata.price
 						});
 
-						$("#invoicemodal").modal('hide');
+						$(".invoicemodal").modal('hide');
 					} else {						
 						console.log("Saving existing product");
-						$("#invoicemodal").modal('hide');
+						$(".invoicemodal").modal('hide');
 					}
 				});
 
@@ -144,6 +209,7 @@
 			controller: controller
 		}
 	}]);
+	
 	
 	
 })();

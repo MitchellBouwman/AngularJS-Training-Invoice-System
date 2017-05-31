@@ -20,7 +20,13 @@
 					<td ng-click="editProduct($index)">{{ products.product }}</td>
 					<td>{{ products.price | currency : "€" : 2 }}</td>
 					<td class="text-right">
-						<a href="#" class="btn btn-sm btn-primary" ng-click="editProduct($index)">Edit product</a>
+						<a href="#" class="btn btn-sm btn-primary hidden" ng-click="editProduct($index)">Edit product</a>
+						
+						<!-- Edit product -->
+						<span ng-controller="modalController as $modal" class="modal-product">
+							<button type="button" class="btn btn-sm btn-primary" ng-click="$modal.open(index)">Edit product</button>
+						</span>
+						
 						<a href="#" class="btn btn-sm btn-danger" ng-click="deleteProduct($index)">Delete</a>
 					</td>
 				</tr>
@@ -37,9 +43,26 @@
 </tr>
 
 
-<script type="text/ng-template" id="popover.html">
-    <div>
-        Are you sure you want to delete this product? <a href>YUUUP</a>
-    </div>
-</script>
+
+
+
+
+<div id="invoicemodal" ng-controller="modalController as $modal" class="modal-product">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h4 class="modal-title" ng-class="{ show: data.product.length > 0 }" id="modal-title"><strong>Edit product: </strong><span ng-modal="productName">{{ data.product }}</span></h4>
+        </div>
+        
+        
+        <div class="modal-body" id="modal-body">
+			<!-- Info appends here -->
+        </div>
+        
+        
+        <div class="modal-footer">           
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button class="btn btn-danger" ng-disabled="productForm.product.$invalid || productForm.price.$invalid" type="button" ng-click="$modal.ok()">Save &amp; close</button>
+        </div>
+    </script>
+</div>
 
