@@ -1,0 +1,21 @@
+// Button
+.triggerAnimation{margin:10% 0;}
+body{background:url('../../static/img/agsquare.png'); background-repeat: repeat;}
+
+// The loadup of the loadscreen
+.loadscreen-loadup{height:0;width:0;background: #1DA3C4/*#00b0a4*/;position: absolute;top: -100%;z-index: 9999999;
+	
+	&.loadup{top:inherit!important; bottom: 0; animation: loadscreen 3s;-webkit-backface-visibility: hidden;}
+}
+
+
+
+@keyframes loadscreen {
+    0%   {bottom: 120%; transform: rotate(3deg);} // Initialization.
+	30%  {bottom: 60%; transform: rotate(1deg);}
+    //25%  {bottom:5%;}
+   // 75%  {bottom:-5%;}
+   
+	100% {bottom:0%;transform: rotate(0deg);}
+}
+
